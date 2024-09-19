@@ -1,0 +1,24 @@
+<section id="activity">
+    <div class="window">
+        <div class="window__title">Recent Activity</div>
+        <div class="window__content">
+            {% for message in room_messages %}
+            <div class="activity">
+                <div class="activity__user_time"><a href="{% url 'user-profile' message.user.id %}">@{{ message.user.username }}</a> <span class="activity__time">{{ message.created |timesince }} ago</span></div>
+                <div class="activity__replied">Replied to "<a href="{% url 'room' message.room.id %}">{{ message.room }}</a>"</div>
+                <p class="activity__message">{{ message }}</p>
+                {% if request.user == message.user %}
+                <div class="activity__delete">
+                    <a href="{% url 'delete-message' message.id %}">Delete</a>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+            {% if not room_messages %}
+            <div class="activity">
+                <p>No activity yet.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>

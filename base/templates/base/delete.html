@@ -1,0 +1,21 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div class="window single-window">
+    <div class="window__title">Delete</div>
+    <div class="window__content">
+        <div class="comment">
+            <h3>Are youb sure you want to delete "{{obj}}"?</h3>
+            <p>This action cannot be undone.</p>
+        </div>
+    </div>
+        <form method="POST" action="">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <a href="{{request.META.HTTP_REFERER}}" class="button">< Go back</a>
+            <input type="submit" value="+ Confirm" class="button" />
+        </form>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,15 @@
+<section id="topics">
+    <div class="window">
+        <div class="window__title">Browse topics</div>
+        <div class="window__content">
+            <ul class="topics">
+                <li><a href="{% url 'home' %}">All</a></li>
+                {% for topic in topics %}
+                {%if topic.room_set.all.count > 0 %}
+                <li><a href="{% url 'home' %}?q={{topic.name}}"><span class="topic__name">{{ topic.name }}</span><span class="topic__count">{{ topic.room_set.all.count }}</span></a></li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</section>

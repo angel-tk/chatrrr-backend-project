@@ -1,0 +1,26 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div class="window single-window">
+    <div class="window__title">Create Room</div>
+    <form method="POST" action="">
+        {% csrf_token %}
+        <label for="topic">Topic</label>
+        <input required type="text" name="topic" value="{{ room.topic }}" list="topic-list"/>
+            <datalist id="topic-list">
+                <select id="room_topic">
+                {% for topic in topics %}
+                <option value="{{ topic.name }}">
+                {% endfor %}
+            </select>
+        </datalist>
+        <label for="name">Title</label>
+        {{ form.name }}
+        <label for="description">Message</label>
+        {{ form.description }}
+        <input type="submit" value="+ Submit" class="button" />
+    </form>
+</div>
+
+{% endblock content %}

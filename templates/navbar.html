@@ -1,0 +1,23 @@
+{% load static %}
+<header id="header">
+    <nav>
+        <a href="{% url 'home' %}" class="icon-logo">
+            <img src="{% static 'images/logo.png' %}" alt="Chatrrr">
+        </a>
+        <ul>
+            <li class="nav-search">
+                <form method="GET" action="{% url 'home' %}">
+                    <input type="text" name="q" placeholder="Search Rooms...">
+                </form>
+            </li>
+            <li class="nav-authentication">
+                {% if request.user.is_authenticated%}
+                <span class="nav-hello">Hello {{request.user}}</span>
+                <a href="{% url 'update-user' %}">Settings</a><a href="{% url 'logout' %}">Log out</a>
+                {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                {% endif %}
+            </li>
+        </ul>
+    </nav>
+</header>

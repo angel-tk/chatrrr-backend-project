@@ -1,0 +1,31 @@
+<section id="wall">
+    {% for room in rooms %}
+    <div class="window">
+        <div class="window__title">Room</div>
+        <div class="window__content">
+            <div class="wall-message">
+                <p class="wall-message__host_username">
+                    <span>{% if request.user == room.host %}Host{% endif %}
+                    <a href="{% url 'user-profile' room.host.id %}" class="wall-message__username">@{{ room.host.username }}</a>
+                    </span>
+                    <span class="wall-message__host_username__time">{{ room.created |timesince }} ago</span>
+                </p>
+                <p class="wall-message__title"><a href="{% url 'room' room.id %}">{{ room.name }}</a></p>
+                <p class="wall-message__msg">{{ room.description|slice:":120" }} [...]</p>
+                {% if request.user == room.host %}
+                <div class="wall-message__edit-delete">
+                    <a href="{% url 'update-room' room.id %}">Edit</a>
+                    <a href="{% url 'delete-room' room.id %}">Delete</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="window__footer">
+            <div class="window__footer__complex-content">
+                <span>{{ room.topic.name }}</span>
+                <span>{{ room.participants.all.count }} people joined</span>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</section>

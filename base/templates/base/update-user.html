@@ -1,0 +1,17 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div class="window single-window">
+    <div class="window__title">Edit User</div>
+    <form method="POST" action="">
+        {% csrf_token %}
+        {% for field in form %}
+        <label for="field.name">{{ field.label }}</label>
+        {{ field }}
+        {% endfor %}
+        <input type="submit" value="+ Submit" class="button" />
+    </form>
+</div>
+
+{% endblock content %}

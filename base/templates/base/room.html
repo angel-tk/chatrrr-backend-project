@@ -1,0 +1,81 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div class="column column-one">
+    <div class="window">
+        <div class="window__title">Participants</div>
+        <div class="window__content">
+            <ul class="participants">
+                {% for user in participants %}
+                <li><a href="{% url 'user-profile' user.id %}">@{{ user.username }}</a></li>
+                {% endfor %}
+                {% if not participants %}
+                <li>No participants yet</li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="column column-two">
+    <div class="room__options">
+        <p>Hosted by @{{ user.username }}</p>
+    </div>
+    <div class="window">
+        <div class="window__title">Message</div>
+        <div class="window__content">
+            <div class="room-main-msg">
+                <h3>{{ room.name }}</h3>
+                <p>{{ room.description }}</p>
+                {% if request.user == room.host %}
+                <div class="room-message__edit-delete">
+                    <a href="{% url 'update-room' room.id %}">Edit</a>
+                    <a href="{% url 'delete-room' room.id %}">Delete</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="window__footer">
+            <div class="window__footer__complex-content">
+                <span>{{ room.topic.name }}</span>
+                <span>Created {{ room.created |timesince }} ago</span>
+            </div>
+        </div>
+    </div>
+
+    {% if room_messages %}
+    <div class="window">
+        <div class="window__title">Conversation</div>
+        <div class="window__content">
+            {% for message in room_messages %}
+            <div class="comment">
+                <div class="comment__user_time"><a href="{% url 'user-profile' message.user.id %}">@{{ message.user.username }}</a> <span class="comment__time">{{ message.created |timesince }} ago</span></div>
+                <p class="comment__message">{{ message.body }}</p>
+                {% if request.user == message.user %}
+                <div class="comment__delete">
+                    <a href="{% url 'delete-message' message.id %}">Delete</a>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+    {% endif %}
+
+    {% if request.user.is_authenticated %}
+    <div class="window">
+        <div class="window__title">Add comment</div>
+        <div class="comment-form">
+            <form method="POST" action="">
+                {% csrf_token %}
+                <label for="body">Remember to be nice!</label>
+                <input type="text" name="body" placeholder="Write your message here..." />
+                <input type="submit" value="+ Add comment" class="button">
+            </form>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

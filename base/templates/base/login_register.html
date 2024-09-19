@@ -1,0 +1,35 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+{% if page == 'login' %}
+<div class="window single-window">
+    <div class="window__title">Login</div>
+    <form method="POST" action="">
+        {% csrf_token %}
+        <label>Username</label>
+        <input type="text" name="username" placeholder="Enter username">
+
+        <label>Password</label>
+        <input type="password" name="password" placeholder="Enter password">
+        
+        <input type="submit" value="Login" class="button" />
+    </form>
+    <p class="signup-login-link">Haven't signed yet? <a href="{% url 'register' %}">Sign up</a></p>
+</div>
+{% else %}
+<div class="window single-window">
+    <div class="window__title">Sign up</div>
+    <form method="POST" action="">
+        {% csrf_token %}
+        {% for field in form %}
+        <label for="field.name">{{ field.label }}</label>
+        {{ field }}
+        {% endfor %}
+        <input type="submit" value="Register" class="button" />
+    </form>
+    <p class="signup-login-link">Already signed up? <a href="{% url 'login' %}">Log in</a></p>
+</div>
+{% endif %}
+
+{% endblock content %}

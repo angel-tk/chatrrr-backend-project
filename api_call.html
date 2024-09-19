@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API call test</title>
+</head>
+<body>
+    <h1>API Rooms</h1>
+    <div id="rooms-container"></div>
+</body>
+<script>
+    const roomsContainer = document.getElementById('rooms-container');
+    const url = 'http://127.0.0.1:8000/api/rooms/';
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(room => {
+                const roomElement = document.createElement('div');
+                roomElement.innerHTML = `
+                    <h2>${room.name}</h2>
+                    <p>${room.description}</p>
+                `;
+                roomsContainer.appendChild(roomElement);
+            });
+        });
+</script>
+</html>
