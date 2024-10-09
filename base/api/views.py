@@ -1,3 +1,4 @@
+from django.http import Http404
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from base.api.serializers import RoomSerializer
@@ -20,6 +21,9 @@ def getRooms(request):
 
 @api_view(['GET'])
 def getRoom(request, pk):
-    room = Room.objects.get(id=pk)
+    try:
+        room = Room.objects.get(id=pk)
+    except Room.DoesNotExist:
+        raise Http404
     serializer = RoomSerializer(room, many=False)
     return Response(serializer.data)

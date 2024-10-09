@@ -1,4 +1,5 @@
 from .models import Message
+from django.http import HttpResponseForbidden
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
@@ -124,7 +125,7 @@ def updateRoom(request, pk):
     topics = Topic.objects.all()
 
     if request.user != room.host:
-        return HttpResponse('You are not allowed here!')
+        return HttpResponseForbidden('You are not allowed here!')
 
     if request.method == 'POST':
         topic_name = request.POST.get('topic')
@@ -134,7 +135,7 @@ def updateRoom(request, pk):
         room.description = request.POST.get('description')
         room.save()
         return redirect('home')
-    
+
     context = {'form': form, 'topics': topics, 'room': room}
     return render(request, 'base/room_form.html', context)
 
@@ -143,8 +144,8 @@ def deleteRoom(request, pk):
     room = Room.objects.get(id=pk)
 
     if request.user != room.host:
-        return HttpResponse('You are not allowed here!')
-    
+        return HttpResponseForbidden('You are not allowed here!')
+
     if request.method == 'POST':
         room.delete()
         return redirect('home')
@@ -156,8 +157,8 @@ def deleteMessage(request, pk):
     message = Message.objects.get(id=pk)
 
     if request.user != message.user:
-        return HttpResponse('You are not allowed here!')
-    
+        return HttpResponseForbidden('You are not allowed here!')
+
     if request.method == 'POST':
         message.delete()
         return redirect('home')

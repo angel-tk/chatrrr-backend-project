@@ -1,0 +1,72 @@
+# Basics
+*.py[cod]
+__pycache__
+.python-version
+
+# pip-compile
+src/
+
+# Patches
+*.patch
+
+# Logs
+*.log
+pip-log.txt
+
+#pact
+dist/
+reports/pacts/
+scripts/test/pact_verifier_cli
+
+# Media
+staticfiles
+.env
+.venv
+venv
+.cache/
+stress_tests/
+logstash.db
+
+# Ignore tags created by etags, ctags, gtags (GNU global) and cscope
+TAGS
+.TAGS
+!TAGS/
+tags
+.tags
+!tags/
+gtags.files
+GTAGS
+GRTAGS
+GPATH
+GSYMS
+cscope.files
+cscope.out
+cscope.in.out
+cscope.po.out
+
+# Ignore Codeship relevant config files
+*.env
+
+# OS specific
+.DS_Store
+
+# mypy
+.mypy_cache
+
+# pip-compile
+/src/
+
+# Development
+htmlcov
+*htmlcov.tgz
+pytest-results/
+
+# VisualStudioCode
+/.vscode
+/.devcontainer
+!.sample_devconfigs/*
+.vscode.bak*
+.devcontainer.bak*
+
+# Backend specific (make)
+macosx-env
