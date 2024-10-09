@@ -1,4 +1,3 @@
-# base/services.py
 from base.models import Room
 from .dtos import RoomDTO
 
