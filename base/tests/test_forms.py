@@ -1,12 +1,11 @@
 from django.test import TestCase
 from base.forms import RoomForm, UserForm
-from base.models import Topic
-from django.contrib.auth.models import User
+from base.factories import UserFactory, TopicFactory
 
 class RoomFormTests(TestCase):
     def setUp(self):
-        self.user = User.objects.create_user(username='testuser', password='testpass')
-        self.topic = Topic.objects.create(name='Test Topic')
+        self.user = UserFactory()
+        self.topic = TopicFactory()
 
     def test_room_form_valid_data(self):
         form_data = {
@@ -32,13 +31,10 @@ class RoomFormTests(TestCase):
         self.assertNotIn('host', form.fields)
         self.assertNotIn('participants', form.fields)
 
-from django.test import TestCase
-from base.forms import UserForm
-from django.contrib.auth.models import User
 
 class UserFormTests(TestCase):
     def setUp(self):
-        self.user = User.objects.create_user(username='testuser', email='testuser@example.com', password='testpass')
+        self.user = UserFactory()
 
     def test_user_form_valid_data(self):
         form_data = {

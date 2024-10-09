@@ -1,18 +1,12 @@
 from django.test import TestCase
-from base.models import Room, Topic
 from base.api.serializers import RoomSerializer
-from django.contrib.auth.models import User
+from base.factories import UserFactory, TopicFactory, RoomFactory
 
 class RoomSerializerTests(TestCase):
     def setUp(self):
-        self.user = User.objects.create_user(username='testuser', password='testpass')
-        self.topic = Topic.objects.create(name='Test Topic')
-        self.room = Room.objects.create(
-            host=self.user,
-            topic=self.topic,
-            name='Test Room',
-            description='Test Room Description'
-        )
+        self.user = UserFactory(username='testuser', password='testpass')
+        self.topic = TopicFactory(name='Test Topic')
+        self.room = RoomFactory(host=self.user, topic=self.topic, name='Test Room', description='Test Room Description')
 
     def test_room_serialization(self):
         serializer = RoomSerializer(self.room)

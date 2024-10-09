@@ -1,21 +1,17 @@
 from django.test import TestCase, Client
 from django.urls import reverse
-from django.contrib.auth.models import User
-from base.models import Room, Topic, Message
+from base.models import Room, Message 
+from base.factories import UserFactory, RoomFactory, TopicFactory, MessageFactory
 
 class BaseTestCase(TestCase):
     def setUp(self):
         self.client = Client()
-        self.user1 = User.objects.create_user(username='testuser1', password='testpass1')
-        self.user2 = User.objects.create_user(username='testuser2', password='testpass2')
-        self.topic = Topic.objects.create(name='Test Topic')
-        self.room = Room.objects.create(
-            host=self.user1, 
-            topic=self.topic, 
-            name='Test Room', 
-            description='Room Description'
-        )
-        self.message = Message.objects.create(user=self.user1, room=self.room, body='Test message')
+        self.user1 = UserFactory(username='testuser1', password='testpass1')
+        self.user2 = UserFactory(username='testuser2', password='testpass2')
+        self.topic = TopicFactory(name='Test Topic')
+        self.room = RoomFactory(host=self.user1, topic=self.topic, name='Test Room', description='Room Description')
+        self.message = MessageFactory(user=self.user1, room=self.room, body='Test message')
+
         self.login_url = reverse('login')
         self.home_url = reverse('home')
         self.room_url = reverse('room', args=[self.room.id])

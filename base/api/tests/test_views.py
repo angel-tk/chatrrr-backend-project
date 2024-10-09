@@ -1,26 +1,15 @@
 from django.test import TestCase
 from rest_framework.test import APIClient
 from rest_framework import status
-from base.models import Room, Topic
-from django.contrib.auth.models import User
+from base.factories import UserFactory, TopicFactory, RoomFactory 
 
 class RoomApiTests(TestCase):
     def setUp(self):
         self.client = APIClient()
-        self.user = User.objects.create_user(username='testuser', password='testpass')
-        self.topic = Topic.objects.create(name='Test Topic')
-        self.room1 = Room.objects.create(
-            host=self.user, 
-            topic=self.topic, 
-            name="Room 1", 
-            description="First test room"
-        )
-        self.room2 = Room.objects.create(
-            host=self.user, 
-            topic=self.topic, 
-            name="Room 2", 
-            description="Second test room"
-        )
+        self.user = UserFactory(username='testuser', password='testpass')
+        self.topic = TopicFactory(name='Test Topic')
+        self.room1 = RoomFactory(host=self.user, topic=self.topic, name="Room 1", description="First test room")
+        self.room2 = RoomFactory(host=self.user, topic=self.topic, name="Room 2", description="Second test room")
 
     def test_get_routes(self):
         response = self.client.get('/api/')
