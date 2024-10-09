@@ -15,9 +15,12 @@ class RoomApiTests(TestCase):
         response = self.client.get('/api/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data, [
-            'GET/api/',
-            'GET/api/rooms',
-            'GET/api/rooms/:id',
+            'GET /api/',
+            'GET /api/rooms/',
+            'GET /api/rooms/:id/',
+            'POST /api/rooms/',
+            'PUT /api/rooms/:id/',
+            'DELETE /api/rooms/:id/',
         ])
 
     def test_get_rooms(self):
